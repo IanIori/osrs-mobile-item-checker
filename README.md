@@ -1,18 +1,18 @@
-# osrs-mobile-item-checker
+# osrs-item-checker
+
 A Grand Exchange item detail checker for Old School RuneScape.
 
-Este aplicativo permite que os usuários pesquisem e vejam os detalhes dos itens da **Grand Exchange** do **Old School RuneScape (OSRS)**. O app conecta-se à API oficial do jogo para fornecer informações detalhadas sobre os itens, incluindo preços atuais e dados adicionais como o valor base, alchemical high/low, entre outros.
+Este aplicativo permite que os usuários pesquisem e vejam os detalhes dos itens da **Grand Exchange** do **Old School RuneScape (OSRS)**. O app conecta-se à API oficial do jogo para fornecer informações atualizadas e detalhadas, incluindo preços, descrição e imagens dos itens.
 
 ## Funcionalidades
-- Pesquisa por nome de item.
-- Exibição de informações detalhadas sobre o item, incluindo:
-  - ID do item.
-  - Descrição do item ("examine").
-  - Status de "membro" (se é exclusivo para membros).
-  - Preços de mercado atualizados (preços altos e baixos).
-  - Valor base (para compra na loja).
-  - Valores de High Alch e Low Alch.
-  - Limite de trades a cada 4 horas.
+
+- Barra de pesquisa com filtro por nome de item (autocomplete simples).
+- Lista dinâmica dos itens carregados da API oficial.
+- Tela de detalhes do item com informações completas:
+  - ID, descrição ("examine"), status de membros, valores de compra e alchemy, limites de trade.
+  - Preço de mercado (alta e baixa).
+  - Imagem do item exibida via URL formatada.
+  - Navegação entre telas usando React Navigation.
 
 ## Instalação
 
@@ -21,7 +21,7 @@ Este aplicativo permite que os usuários pesquisem e vejam os detalhes dos itens
 Primeiro, clone o repositório para sua máquina local:
 
 ```bash
-git clone https://github.com/seu-usuario/osrs-mobile-item-checker.git
+git clone https://github.com/seu-usuario/osrs-item-checker.git
 ```
 
 ### 2. Instalando dependências
@@ -29,7 +29,7 @@ git clone https://github.com/seu-usuario/osrs-mobile-item-checker.git
 Navegue até o diretório do projeto e instale as dependências necessárias:
 
 ```bash
-cd osrs-mobile-item-checker
+cd osrs-item-checker
 npm install
 ```
 
@@ -56,11 +56,3 @@ O aplicativo utiliza a **API do Old School RuneScape** para obter informações 
 
 - [API de mapeamento de itens](https://prices.runescape.wiki/api/v1/osrs/mapping) - Retorna o mapeamento de itens.
 - [API de preços mais recentes](https://prices.runescape.wiki/api/v1/osrs/latest?id=ITEM_ID) - Retorna o preço mais recente de um item específico.
-
-## Contribuições
-
-Se você deseja contribuir para o projeto, sinta-se à vontade para abrir **issues** ou **pull requests**.
-
-## Licença
-
-Este projeto está licenciado sob a **MIT License** - consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
