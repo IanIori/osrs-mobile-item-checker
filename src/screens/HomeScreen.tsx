@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
+import { View, StyleSheet, FlatList, Pressable, TextInput } from "react-native";
 import { Text } from "react-native-paper";
 
 const HomeScreen = ({ navigation }: any) => {
   const [items, setItems] = useState<any[]>([]);
+  const [filteredItems, setFilteredItems] = useState<any[]>([]);
+  const [searchText, setSearchText] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -20,6 +16,7 @@ const HomeScreen = ({ navigation }: any) => {
         );
         const data = await response.json();
         setItems(data);
+        setFilteredItems(data); // inicializa com tudo
       } catch (err) {
         setError("Erro ao carregar itens");
       }
@@ -28,13 +25,22 @@ const HomeScreen = ({ navigation }: any) => {
     fetchItems();
   }, []);
 
+  // Atualiza filteredItems sempre que searchText ou items mudam
+  useEffect(() => {
+    if (!searchText) {
+      setFilteredItems(items);
+    } else {
+      const filtered = items.filter((item) =>
+        item.name.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setFilteredItems(filtered);
+    }
+  }, [searchText, items]);
+
   const renderItem = ({ item }: { item: any }) => (
     <Pressable
-      style={{ padding: 20, backgroundColor: "#ddd", marginVertical: 5 }}
-      onPress={() => {
-        console.log("Item clicado:", item);
-        navigation.navigate("Detalhes", { itemData: item });
-      }}
+      style={styles.itemContainer}
+      onPress={() => navigation.navigate("Detalhes", { itemData: item })}
     >
       <Text style={styles.itemText}>{item.name}</Text>
     </Pressable>
@@ -43,11 +49,19 @@ const HomeScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       {error ? <Text style={styles.error}>{error}</Text> : null}
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Pesquisar itens..."
+        value={searchText}
+        onChangeText={setSearchText}
+        autoCorrect={false}
+        autoCapitalize="none"
+        clearButtonMode="while-editing"
+      />
       <FlatList
-        data={items}
+        data={filteredItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
-        ListHeaderComponent={() => <Text>Item List</Text>}
       />
     </View>
   );
@@ -55,9 +69,39 @@ const HomeScreen = ({ navigation }: any) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: "#fff" },
-  item: { padding: 15, borderBottomWidth: 1, borderBottomColor: "#ccc" },
-  itemText: { fontSize: 18 },
-  error: { color: "red", marginTop: 10 },
+
+  searchInput: {
+    height: 40,
+    borderColor: "#999",
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginBottom: 15,
+    borderRadius: 8,
+    backgroundColor: "#f9f9f9",
+  },
+
+  itemContainer: {
+    backgroundColor: "#e0e0e0", // cinza clarinho
+    padding: 15,
+    marginVertical: 6,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2, // sombra android
+  },
+
+  itemText: {
+    fontSize: 18,
+    color: "#333",
+    fontWeight: "500",
+  },
+
+  error: {
+    color: "red",
+    marginTop: 10,
+  },
 });
 
 export default HomeScreen;
