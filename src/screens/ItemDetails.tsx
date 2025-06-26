@@ -44,8 +44,12 @@ export default function ItemDetails({ route }: Props) {
   }, [itemData.id]);
 
   const imageUrl = itemData.icon
-    ? `https://runescape.wiki/images/${encodeURIComponent(itemData.icon)}`
+    ? `https://oldschool.runescape.wiki/images/${encodeURIComponent(
+        itemData.icon.replace(/ /g, "_")
+      )}`
     : null;
+
+  console.log("URL da imagem:", imageUrl);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -59,8 +63,7 @@ export default function ItemDetails({ route }: Props) {
               resizeMode="contain"
             />
           )}
-          <Text>ID: {itemData.id}</Text>
-          <Text>Examine: {itemData.examine}</Text>
+          <Text>Description: {itemData.examine}</Text>
           <Text>Membros: {itemData.members ? "Sim" : "Não"}</Text>
           <Text>Valor base (shop): {itemData.value.toLocaleString()} gp</Text>
           <Text>High Alch: {itemData.highalch.toLocaleString()} gp</Text>
