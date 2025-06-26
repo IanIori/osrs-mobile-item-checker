@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 import { Text } from "react-native-paper";
 
 const HomeScreen = ({ navigation }: any) => {
@@ -22,13 +28,16 @@ const HomeScreen = ({ navigation }: any) => {
     fetchItems();
   }, []);
 
-  const renderItem = ({ item }: any) => (
-    <TouchableOpacity
-      style={styles.item}
-      onPress={() => navigation.navigate("Detalhes", { itemData: item })}
+  const renderItem = ({ item }: { item: any }) => (
+    <Pressable
+      style={{ padding: 20, backgroundColor: "#ddd", marginVertical: 5 }}
+      onPress={() => {
+        console.log("Item clicado:", item);
+        navigation.navigate("Detalhes", { itemData: item });
+      }}
     >
       <Text style={styles.itemText}>{item.name}</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (
@@ -38,6 +47,7 @@ const HomeScreen = ({ navigation }: any) => {
         data={items}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
+        ListHeaderComponent={() => <Text>Item List</Text>}
       />
     </View>
   );

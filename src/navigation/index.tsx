@@ -12,9 +12,13 @@ export default function AppNavigator() {
       <Stack.Screen
         name="Início"
         component={HomeScreen}
-        options={{ title: "Old School Runescape Item checker" }}
+        options={{ title: "Old School Runescape Item Checker" }}
       />
-      <Stack.Screen name="Detalhes" component={ItemDetails} />
+      <Stack.Screen
+        name="Detalhes"
+        component={ItemDetails}
+        options={{ title: "Item Details" }}
+      />
     </Stack.Navigator>
   );
 }
